@@ -18,6 +18,8 @@ public function run(): void
         DemoCatalogSeeder::class,
         CarSeeder::class,
         RentalSeeder::class,
+        PartSeeder::class,
+        ImportListingSeeder::class
     ]);
 }
 
