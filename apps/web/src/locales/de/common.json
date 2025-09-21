@@ -1,0 +1,310 @@
+{
+  "nav": {
+    "user": "Benutzer",
+    "partner": "Partner",
+    "admin": "Admin",
+    "workshops": "Werkstätten",
+    "myBookings": "Meine Buchungen"
+  },
+
+  "role": { "user": "Benutzer", "partner": "Partner", "admin": "Admin" },
+
+  "btn": {
+    "logout": "Abmelden",
+    "login": "Anmelden",
+    "save": "Speichern",
+    "search": "Suchen",
+    "browseWorkshops": "Werkstätten durchsuchen",
+    "myBookings": "Meine Buchungen"
+  },
+
+  "home": {
+    "title": "Willkommen bei AutoOne",
+    "subtitle": "Finde Werkstätten, Autowäsche, Vermietungen, Import u.v.m.",
+    "search": { "placeholder": "Werkstätten oder Services suchen…", "aria": "Suchen", "cta": "Suchen" },
+    "categories": "Servicekategorien",
+    "quick": {
+      "title": "Schnellzugriff",
+      "bookings": "Meine Buchungen",
+      "carwash": "Autowäsche",
+      "rentals": "Meine Mietwagen",
+      "imports": "Meine Importe",
+      "parts": "Meine Teile-Bestellungen"
+    }
+  },
+
+  "cats": {
+    "workshops": "Werkstätten & Wartung",
+    "wash": "Autowäsche",
+    "buy": "Autos kaufen/finanzieren",
+    "rental": "Autovermietung",
+    "import": "Autoimport (EU/China/USA)",
+    "parts": "Ersatzteile-Marktplatz"
+  },
+
+  "workshops": {
+    "title": "Werkstätten & Wartung",
+    "search": "Suchen",
+    "search.placeholder": "Werkstätten suchen…",
+    "price": "Preis",
+    "services": "Leistungen",
+    "none": "Keine Werkstätten gefunden.",
+    "view": { "list": "Liste", "map": "Karte" },
+    "filter": { "minPrice": "Mindestpreis", "maxPrice": "Höchstpreis", "minRating": "Mindestbewertung", "apply": "Anwenden" },
+    "book": {
+      "title": "Diesen Service buchen",
+      "selected": "Ausgewählter Service",
+      "notes": "Notizen (optional)",
+      "cta": "Jetzt buchen"
+    }
+  },
+
+  "workshop": {
+    "back": "← Zurück zur Liste",
+    "services": "Leistungen",
+    "book": {
+      "title": "Diesen Service buchen",
+      "selectedService": "Ausgewählter Service",
+      "datetime": "Datum & Uhrzeit",
+      "notes": "Notizen (optional)",
+      "cta": "Jetzt buchen"
+    },
+    "goToBookings": "Zu meinen Buchungen"
+  },
+
+  "bookings": {
+    "title": "Meine Buchungen",
+    "back": "← Zur Startseite",
+    "none": "Keine Buchungen vorhanden.",
+    "success": "Buchung erstellt!",
+    "fail": "Buchung konnte nicht erstellt werden",
+    "cta": "Buchen",
+    "notes": "Notizen (optional)"
+  },
+
+  "status": {
+    "pending": "Ausstehend",
+    "confirmed": "Bestätigt",
+    "rejected": "Abgelehnt",
+    "when": "Wann",
+    "workshop": "Werkstatt",
+    "customer": "Kunde"
+  },
+
+  "profile": {
+    "title": "Profil",
+    "name": "Name",
+    "language": "Bevorzugte Sprache",
+    "saved": "Gespeichert",
+    "saveFail": "Speichern fehlgeschlagen",
+    "company": "Firmenname",
+    "phone": "Telefon (optional)"
+  },
+
+  "carwash": {
+    "title": "Autowäsche",
+    "search": "Suchen",
+    "search.placeholder": "Autowäsche suchen…",
+    "services": "Leistungen",
+    "none": "Keine Anbieter.",
+    "noServices": "Keine Leistungen."
+  },
+
+  "cars": {
+    "title": "Autos kaufen / finanzieren",
+    "search": "Autos suchen...",
+    "description": "Beschreibung",
+    "condition": { "all": "Neu & Gebraucht", "new": "Neu", "used": "Gebraucht" },
+    "fuel": { "all": "Alle Kraftstoffe", "petrol": "Benzin", "diesel": "Diesel", "hybrid": "Hybrid", "ev": "Elektro" },
+    "finance": {
+      "title": "Finanzierungsrechner",
+      "down": "Anzahlung (€)",
+      "apr": "Zinssatz (%)",
+      "term": "Laufzeit",
+      "months": "Monate",
+      "result": "Monatliche Rate",
+      "mo": "Mon.",
+      "disclaimer": "Nur Schätzung. Endgültige Konditionen vom Anbieter."
+    }
+  },
+
+  "rental": {
+    "title": "Autovermietung",
+    "search": "Stadt oder Auto…",
+    "provider": { "all": "Firma & Privat", "company": "Firma", "individual": "Privat" },
+    "unit": { "any": "Beliebig", "hour": "Stunde", "day": "Tag", "week": "Woche", "month": "Monat", "year": "Jahr" },
+    "book": {
+      "title": "Dieses Auto buchen",
+      "cta": "Buchung & PDF-Vertrag erstellen",
+      "success": "Buchung erstellt. Vertrag bereit.",
+      "fail": "Buchung fehlgeschlagen.",
+      "download": "Vertrag herunterladen (PDF)"
+    },
+    "description": "Beschreibung",
+    "my": "Meine Mietwagen",
+    "none": "Keine Mietbuchungen.",
+    "unitLabel": "Einheit",
+    "unknown": "Miete"
+  },
+
+  "import": {
+    "title": "Autoimport",
+    "search": "Marke oder Modell suchen…",
+    "none": "Keine Ergebnisse.",
+    "new": "Neuer Importauftrag",
+    "region": "Region",
+    "dest": "Ziel",
+    "make": "Marke",
+    "model": "Modell",
+    "year": "Jahr",
+    "purchase": "Kaufpreis (€)",
+    "est": "Geschätzte Kosten",
+    "enterPrice": "Kaufpreis eingeben, um zu berechnen.",
+    "submit": "Anfrage senden",
+    "success": "Importanfrage gesendet.",
+    "fail": "Anfrage fehlgeschlagen.",
+    "my": "Meine Importe",
+    "base": "Basis",
+    "noneMine": "Noch keine Anfragen."
+  },
+
+  "parts": {
+    "title": "Ersatzteile",
+    "all": "Alle Kategorien",
+    "min": "Min €",
+    "max": "Max €",
+    "stock": "Auf Lager",
+    "compat": "Kompatibel mit",
+    "qty": "Menge",
+    "add": "In den Warenkorb",
+    "gotoCart": "Zum Warenkorb",
+    "orderCta": "Teil bestellen",
+    "ordered": "Bestellung aufgegeben.",
+    "orderFail": "Bestellung fehlgeschlagen.",
+    "myOrders": "Meine Teile-Bestellungen",
+    "noneOrders": "Keine Bestellungen.",
+    "model": "Modell (z. B. VW Golf)",
+    "vin": "VIN",
+    "cart": "Warenkorb",
+    "cartEmpty": "Dein Warenkorb ist leer.",
+    "checkoutOk": "Bestellung erfolgreich!",
+    "checkoutFail": "Checkout fehlgeschlagen.",
+    "added": "Zum Warenkorb hinzugefügt.",
+    "review": "Bestellung prüfen",
+    "notesInfo": "Notizen werden je Artikel angehängt.",
+    "orderRef": "Deine Bestell-IDs:",
+    "viewOrders": "Bestellungen ansehen"
+  },
+
+  "filters": {
+    "minPrice": "Mindestpreis",
+    "maxPrice": "Höchstpreis",
+    "apply": "Anwenden",
+    "status": { "all": "Alle Status" },
+    "from": "Von Datum",
+    "to": "Bis Datum",
+    "search": { "placeholder": "Nach Name/E-Mail/Werkstatt/Service suchen…" }
+  },
+
+  "auth": {
+    "password": "Passwort",
+    "signup": { "submit": "Registrieren", "haveAccount": "Schon ein Konto?" },
+    "partner": { "signup": { "title": "Partnerkonto erstellen" } }
+  },
+
+  "admin": {
+    "partners": {
+      "title": "Ausstehende Partner",
+      "name": "Name",
+      "email": "E-Mail",
+      "company": "Firma",
+      "type": "Typ",
+      "phone": "Telefon",
+      "status": "Status",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen",
+      "working": "Bitte warten…",
+      "empty": "Keine ausstehenden Partner.",
+      "errorLoad": "Partner konnten nicht geladen werden",
+      "errorAction": "Aktion fehlgeschlagen"
+    }
+  },
+
+  "common": { "backToList": "Zurück zur Liste" },
+  "back": "Zurück",
+  "loading": "Wird geladen…",
+  "empty": "Keine Einträge.",
+  "apply": "Anwenden",
+  "search": "Suchen",
+  "notes": "Notizen",
+  "optional": "optional",
+  "total": "Gesamt",
+  "each": "je",
+  "placing": "Wird bestellt…",
+  "placeOrder": "Bestellen",
+
+  "error": {
+    "load": {
+      "list": "Liste konnte nicht geladen werden.",
+      "detail": "Details konnten nicht geladen werden.",
+      "workshops": "Werkstätten konnten nicht geladen werden",
+      "workshop": "Werkstatt konnte nicht geladen werden",
+      "carwash": "Autowäsche-Anbieter konnten nicht geladen werden",
+      "rentals": "Deine Mietbuchungen konnten nicht geladen werden."
+    },
+    "create": { "booking": "Buchung konnte nicht erstellt werden" }
+  },
+  "home": {
+  "title": "Willkommen bei AutoOne",
+  "subtitle": "Finde Werkstätten, Autowäsche, Vermietungen, Import u.v.m.",
+  "search": { "placeholder": "Werkstätten oder Services suchen…", "cta": "Suchen" },
+  "quick": {
+    "bookings": "Meine Buchungen",
+    "carwash": "Autowäsche",
+    "rentals": "Meine Mietwagen",
+    "imports": "Meine Importanträge",
+    "parts": "Meine Ersatzteilbestellungen"
+  },
+  "buy": { "desc": "Neu & gebraucht, Filter & Finanzierung" },
+  "carwash": { "desc": "Außen, Innen, Polieren" },
+  "workshops": { "desc": "Ölwechsel, Reifen, Reparaturen…" },
+  "rental": { "desc": "Nach Datum & Ort suchen" },
+  "import": { "desc": "Gesamtkosten schätzen & bestellen" },
+  "parts": { "desc": "Teile durchsuchen & zur Kasse" }
+},
+"workshop": {
+  "services": "Leistungen",
+  "book": {
+    "title": "Diesen Service buchen",
+    "selectedService": "Ausgewählter Service",
+    "datetime": "Datum & Uhrzeit",
+    "notes": "Notizen (optional)",
+    "bookNow": "Jetzt buchen",
+    "ok": "Buchung erfolgreich erstellt.",
+    "goToBookings": "Zu meinen Buchungen"
+  }
+},"btn": { "search": "Suchen" },
+"partner": {
+  "home": {
+    "title": "Partner-Dashboard",
+    "kpis": { "avgRating": "Ø-Bewertung", "revenue": "Umsatz", "bookings": "Buchungen" },
+    "cards": {
+      "reports": { "title": "Berichte", "desc": "Monatlicher Umsatz und Top-Services." },
+      "services": { "title": "Services verwalten", "desc": "Services und Preise erstellen, bearbeiten oder entfernen." },
+      "bookings": { "title": "Buchungen verwalten", "desc": "Bevorstehende Buchungen bestätigen oder ablehnen." },
+      "orders": { "title": "Ersatzteil-Bestellungen", "desc": "Kundenbestellungen prüfen und aktualisieren." },
+      "parts": { "title": "Ersatzteile verwalten", "desc": "Teile hinzufügen, Details bearbeiten und Bestand aktualisieren." },
+      "comingSoon": "Mehr demnächst"
+    }
+  }, "reports": {
+    "title": "Berichte & Analysen",
+    "monthlyRevenue": "Monatlicher Umsatz",
+    "topServices": "Meistgebuchte Services",
+    "bookings": "Buchungen",
+    "error": "Berichte konnten nicht geladen werden"
+  }
+},
+"loading": "Wird geladen…"
+
+
+}

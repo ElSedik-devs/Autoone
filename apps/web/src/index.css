@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design system defaults */
+:root {
+  color-scheme: light;
+  --font-sans: Inter, Roboto, ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+html { font-family: var(--font-sans); background: #fff; }
+body { color: #0f172a; } /* slate-900-ish */
+a { @apply text-primary hover:underline; }
+
+/* Buttons */
+.btn {
+  @apply inline-flex items-center justify-center rounded-md px-4 py-2 font-medium;
+}
+.btn-primary {
+  @apply btn bg-primary text-white hover:brightness-110 active:brightness-95;
+}
+.btn-secondary {
+  @apply btn bg-secondary text-black hover:brightness-110 active:brightness-95;
+}
+.btn-outline {
+  @apply btn border border-gray-300 hover:bg-gray-50;
+}
+
+/* --- brand buttons --- */
+@layer components {
+  .btn-base {
+    @apply inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn-base bg-primary text-white hover:opacity-90;
+  }
+  .btn-secondary {
+    @apply btn-base bg-secondary text-black hover:opacity-90;
+  }
+  .btn-outline {
+    @apply btn-base border border-gray-300 bg-white hover:bg-gray-50;
+  }
+}

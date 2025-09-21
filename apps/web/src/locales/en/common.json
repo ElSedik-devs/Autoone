@@ -1,0 +1,298 @@
+{
+  "nav": {
+    "user": "User",
+    "partner": "Partner",
+    "admin": "Admin",
+    "workshops": "Workshops",
+    "myBookings": "My Bookings"
+  },
+
+  "role": { "user": "user", "partner": "partner", "admin": "admin" },
+
+  "btn": {
+    "logout": "Logout",
+    "login": "Login",
+    "save": "Save",
+    "search": "Search",
+    "browseWorkshops": "Browse Workshops",
+    "myBookings": "My Bookings"
+  },
+
+  "home": {
+    "title": "Welcome to AutoOne",
+    "subtitle": "Find workshops, car wash, rentals, imports and more.",
+    "search": {
+      "placeholder": "Search workshops or services…",
+      "aria": "Search",
+      "cta": "Search"
+    },
+    "categories": "Service categories",
+    "quick": {
+      "title": "Quick Links",
+      "bookings": "My Bookings",
+      "carwash": "Car Wash",
+      "rentals": "My Rentals",
+      "imports": "My Imports",
+      "parts": "My Parts Orders"
+    }
+  },
+
+  "cats": {
+    "workshops": "Workshops & Maintenance",
+    "wash": "Car Wash",
+    "buy": "Buy / Finance Cars",
+    "rental": "Car Rental",
+    "import": "Car Import (EU/China/USA)",
+    "parts": "Spare Parts Marketplace"
+  },
+
+  "cat": {
+    "workshops": "Workshops & Maintenance",
+    "carwash": "Car Wash",
+    "cars": "Buy/Finance Cars",
+    "rental": "Car Rental",
+    "import": "Car Import (EU/China/USA)",
+    "parts": "Spare Parts Marketplace"
+  },
+
+  "workshops": {
+    "title": "Workshops & Maintenance",
+    "search": "Search",
+    "search.placeholder": "Search workshops…",
+    "price": "Price",
+    "services": "Services",
+    "none": "No workshops found.",
+    "view": { "list": "List", "map": "Map" },
+    "filter": { "minPrice": "Min price", "maxPrice": "Max price", "minRating": "Min rating", "apply": "Apply" },
+    "book": {
+      "title": "Book this service",
+      "selected": "Selected service",
+      "notes": "Notes (optional)",
+      "cta": "Book now"
+    }
+  },
+
+  "workshop": {
+    "back": "← Back to list",
+    "services": "Services",
+    "book": {
+      "title": "Book this service",
+      "selectedService": "Selected service",
+      "datetime": "Date & time",
+      "notes": "Notes (optional)",
+      "cta": "Book now"
+    },
+    "goToBookings": "Go to My Bookings"
+  },
+
+  "bookings": {
+    "title": "My Bookings",
+    "back": "← Back to Home",
+    "none": "You have no bookings yet.",
+    "success": "Booking created!",
+    "fail": "Failed to create booking",
+    "cta": "Book",
+    "notes": "Notes (optional)"
+  },
+
+  "status": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "rejected": "Rejected",
+    "when": "When",
+    "workshop": "Workshop",
+    "customer": "Customer"
+  },
+
+  "profile": {
+    "title": "Profile",
+    "name": "Name",
+    "language": "Preferred language",
+    "saved": "Saved",
+    "saveFail": "Failed to save",
+    "company": "Company name",
+    "phone": "Phone (optional)"
+  },
+
+  "carwash": {
+    "title": "Car Wash",
+    "search": "Search",
+    "search.placeholder": "Search car wash…",
+    "services": "Services",
+    "none": "No car wash providers.",
+    "noServices": "No services."
+  },
+
+  "cars": {
+    "title": "Buy / Finance Cars",
+    "search": "Search cars...",
+    "description": "Description",
+    "condition": { "all": "New & Used", "new": "New", "used": "Used" },
+    "fuel": { "all": "Any fuel", "petrol": "Petrol", "diesel": "Diesel", "hybrid": "Hybrid", "ev": "Electric" },
+    "finance": {
+      "title": "Finance calculator",
+      "down": "Down payment (€)",
+      "apr": "APR (%)",
+      "term": "Term",
+      "months": "months",
+      "result": "Estimated monthly",
+      "mo": "mo",
+      "disclaimer": "Estimation only. Final terms depend on provider."
+    }
+  },
+
+  "rental": {
+    "title": "Car Rental",
+    "search": "City or car…",
+    "provider": { "all": "Company & Individual", "company": "Company", "individual": "Individual" },
+    "unit": { "any": "Any unit", "hour": "hour", "day": "day", "week": "week", "month": "month", "year": "year" },
+    "book": {
+      "title": "Book this car",
+      "cta": "Create booking & PDF contract",
+      "success": "Booking created. Contract ready.",
+      "fail": "Booking failed.",
+      "download": "Download contract (PDF)"
+    },
+    "description": "Description",
+    "my": "My Rentals",
+    "none": "No rental bookings yet.",
+    "unitLabel": "Unit",
+    "unknown": "Rental"
+  },
+
+  "import": {
+    "title": "Car Import",
+    "search": "Search brand or model…",
+    "none": "No results.",
+    "new": "New Import Request",
+    "region": "Region",
+    "dest": "Destination",
+    "make": "Make",
+    "model": "Model",
+    "year": "Year",
+    "purchase": "Purchase price (€)",
+    "est": "Estimated cost",
+    "enterPrice": "Enter a purchase price to estimate.",
+    "submit": "Submit request",
+    "success": "Import request submitted.",
+    "fail": "Failed to submit request.",
+    "my": "My Imports",
+    "base": "Base",
+    "noneMine": "No import requests yet."
+  },
+
+  "parts": {
+    "title": "Spare Parts",
+    "all": "All categories",
+    "min": "Min €",
+    "max": "Max €",
+    "stock": "In stock",
+    "compat": "Compatible with",
+    "qty": "Quantity",
+    "add": "Add to cart",
+    "gotoCart": "Go to cart",
+    "orderCta": "Order part",
+    "ordered": "Order placed.",
+    "orderFail": "Failed to place order.",
+    "myOrders": "My Parts Orders",
+    "noneOrders": "No orders yet.",
+    "model": "Model (e.g., VW Golf)",
+    "vin": "VIN",
+    "cart": "Cart",
+    "cartEmpty": "Your cart is empty.",
+    "checkoutOk": "Order placed!",
+    "checkoutFail": "Checkout failed.",
+    "added": "Added to cart.",
+    "review": "Review your order",
+    "notesInfo": "Optional notes will be attached to each item.",
+    "orderRef": "Your item order IDs:",
+    "viewOrders": "View my orders"
+  },
+
+  "filters": {
+    "minPrice": "Min price",
+    "maxPrice": "Max price",
+    "apply": "Apply",
+    "status": { "all": "All statuses" },
+    "from": "From date",
+    "to": "To date",
+    "search": { "placeholder": "Search name/email/workshop/service…" }
+  },
+
+  "auth": {
+    "password": "Password",
+    "signup": {
+      "submit": "Sign up",
+      "haveAccount": "Already have an account?"
+    },
+    "partner": {
+      "signup": {
+        "title": "Create Partner Account"
+      }
+    }
+  },
+
+  "admin": {
+    "partners": {
+      "title": "Pending Partners",
+      "name": "Name",
+      "email": "Email",
+      "company": "Company",
+      "type": "Type",
+      "phone": "Phone",
+      "status": "Status",
+      "approve": "Approve",
+      "reject": "Reject",
+      "working": "Working…",
+      "empty": "No pending partners.",
+      "errorLoad": "Failed to load pending partners",
+      "errorAction": "Action failed"
+    }
+  },
+
+  "common": { "backToList": "Back to list" },
+  "back": "Back",
+  "loading": "Loading…",
+  "empty": "No items found.",
+  "apply": "Apply",
+  "search": "Search",
+  "notes": "Notes",
+  "optional": "optional",
+  "total": "Total",
+  "each": "each",
+  "placing": "Placing…",
+  "placeOrder": "Place order",
+
+  "error": {
+    "load": {
+      "list": "Failed to load list.",
+      "detail": "Failed to load details.",
+      "workshops": "Failed to load workshops",
+      "workshop": "Failed to load workshop",
+      "carwash": "Failed to load car wash providers",
+      "rentals": "Failed to load your rentals."
+    },
+    "create": { "booking": "Failed to create booking" }
+  },"btn": { "search": "Search" },
+"partner": {
+  "home": {
+    "title": "Partner Dashboard",
+    "kpis": { "avgRating": "Avg. Rating", "revenue": "Revenue", "bookings": "Bookings" },
+    "cards": {
+      "reports": { "title": "Reports", "desc": "Monthly revenue and top services." },
+      "services": { "title": "Manage Services", "desc": "Create, edit, or remove services & pricing." },
+      "bookings": { "title": "Manage Bookings", "desc": "Confirm or reject upcoming bookings." },
+      "orders": { "title": "Parts Orders", "desc": "Review and update customer orders." },
+      "parts": { "title": "Manage Parts", "desc": "Add parts, edit details, and update stock." },
+      "comingSoon": "More coming soon"
+    }
+  },  "reports": {
+    "title": "Reports & Analytics",
+    "monthlyRevenue": "Monthly revenue",
+    "topServices": "Most booked services",
+    "bookings": "bookings",
+    "error": "Failed to load reports"
+  }
+},
+"loading": "Loading…"
+}
