@@ -2,7 +2,7 @@ import axios, { AxiosHeaders, type InternalAxiosRequestConfig } from "axios";
 import i18n from "../i18n";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL ?? "/api", // remove hardcoded localhost
   headers: {
     "Accept": "application/json",
     "Accept-Language": i18n.language || "en",
