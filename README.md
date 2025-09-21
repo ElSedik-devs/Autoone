@@ -23,10 +23,15 @@ cd backend
 docker compose up -d
 
 # 2) Backend (from backend/)
+cd backend
 cp .env.example .env
 composer install
 php artisan key:generate
-php artisan migrate
+
+# run migrations + demo seed data (users, workshops, services, cars, rentals, parts, imports)
+php artisan migrate --seed
+
+# start API
 php artisan serve --host=0.0.0.0 --port=8000
 
 # 3) Frontend (from apps/web/)
@@ -71,7 +76,7 @@ cd backend
 cp .env.example .env
 composer install
 php artisan key:generate
-php artisan migrate
+php artisan migrate --seed
 php artisan serve --host=0.0.0.0 --port=8000
 ```
 
