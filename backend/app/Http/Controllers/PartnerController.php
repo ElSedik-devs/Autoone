@@ -13,6 +13,13 @@ use App\Models\PartOrder;
 
 class PartnerController extends Controller
 {
+    private function toLinesArray($val): ?array {
+    if ($val === null) return null;
+    if (is_array($val)) return array_values(array_filter(array_map('trim', $val), fn($s)=>$s!==''));
+    // string from textarea
+    return array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string)$val)), fn($s)=>$s!==''));
+}
+
     /* ----------------- helpers ----------------- */
 
     private function assertPartner(Request $request): void
@@ -179,23 +186,40 @@ class PartnerController extends Controller
         $pid = $this->pid($request);
 
         $data = $request->validate([
-            'workshop_id'        => ['required', 'integer', 'exists:workshops,id'],
-            'title'              => ['required', 'string', 'max:255'],
-            'price'              => ['required', 'numeric', 'min:0'],
-            'title_translations' => ['nullable', 'array'],
-        ]);
+    'workshop_id'        => ['required','integer','exists:workshops,id'],
+    'title'              => ['required','string','max:255'],
+    'price'              => ['required','numeric','min:0'],
+    'title_translations' => ['nullable','array'],
+
+    'summary'            => ['nullable','string','max:1000'],
+    'duration_min'       => ['nullable','integer','min:1','max:600'],
+    'included'           => ['nullable'], // string (textarea) OR array
+    'excluded'           => ['nullable'],
+    'preparation'        => ['nullable'],
+    'policy'             => ['nullable','array'], // e.g. { cancellation, warranty_days }
+    'faqs'               => ['nullable','array'], // [{q,a}]
+    'notes'              => ['nullable','string'],
+]);
 
         // ensure the workshop belongs to this partner
-        $ws = Workshop::where('id', $data['workshop_id'])
-            ->where('owner_user_id', $pid)
-            ->firstOrFail();
+$ws = Workshop::where('id', $data['workshop_id'])
+    ->where('owner_user_id', $pid)->firstOrFail();
 
-        $svc = Service::create([
-            'workshop_id'        => $ws->id,
-            'title'              => $data['title'],
-            'price'              => $data['price'],
-            'title_translations' => $data['title_translations'] ?? null,
-        ]);
+$svc = Service::create([
+    'workshop_id'        => $ws->id,
+    'title'              => $data['title'],
+    'price'              => $data['price'],
+    'title_translations' => $data['title_translations'] ?? null,
+
+    'summary'            => $data['summary'] ?? null,
+    'duration_min'       => $data['duration_min'] ?? null,
+    'included'           => $this->toLinesArray($data['included'] ?? null),
+    'excluded'           => $this->toLinesArray($data['excluded'] ?? null),
+    'preparation'        => $this->toLinesArray($data['preparation'] ?? null),
+    'policy'             => $data['policy'] ?? null,
+    'faqs'               => $data['faqs'] ?? null,
+    'notes'              => $data['notes'] ?? null,
+]);
 
         return $svc->load('workshop');
     }
@@ -211,11 +235,27 @@ class PartnerController extends Controller
             ->whereHas('workshop', fn($q) => $q->where('owner_user_id', $pid))
             ->firstOrFail();
 
-        $data = $request->validate([
-            'title'              => ['sometimes', 'string', 'max:255'],
-            'price'              => ['sometimes', 'numeric', 'min:0'],
-            'title_translations' => ['sometimes', 'nullable', 'array'],
-        ]);
+       $data = $request->validate([
+    'title'              => ['sometimes','string','max:255'],
+    'price'              => ['sometimes','numeric','min:0'],
+    'title_translations' => ['sometimes','nullable','array'],
+
+    'summary'            => ['sometimes','nullable','string','max:1000'],
+    'duration_min'       => ['sometimes','nullable','integer','min:1','max:600'],
+    'included'           => ['sometimes','nullable'],
+    'excluded'           => ['sometimes','nullable'],
+    'preparation'        => ['sometimes','nullable'],
+    'policy'             => ['sometimes','nullable','array'],
+    'faqs'               => ['sometimes','nullable','array'],
+    'notes'              => ['sometimes','nullable','string'],
+]);
+
+// Normalize textareas to arrays if present
+foreach (['included','excluded','preparation'] as $k) {
+    if (array_key_exists($k, $data)) {
+        $data[$k] = $this->toLinesArray($data[$k]);
+    }
+}
 
         $svc->fill($data);
         $svc->save();
@@ -236,4 +276,14 @@ class PartnerController extends Controller
         $svc->delete();
         return response()->noContent();
     }
+    // GET /api/partner/workshops
+public function myWorkshops(Request $request)
+{
+    $this->assertPartner($request);
+    $pid = $this->pid($request);
+
+    return \App\Models\Workshop::where('owner_user_id', $pid)
+        ->orderBy('name')
+        ->get(['id', 'name']);
+}
 }

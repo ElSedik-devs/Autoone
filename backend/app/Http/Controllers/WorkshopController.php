@@ -41,33 +41,43 @@ public function index(Request $request)
 
 
 
-    // GET /api/workshops/{id}
-    public function show(Request $request, int $id)
-    {
-        $lngHeader = $request->header('Accept-Language', 'en');
-        $lng = substr($lngHeader, 0, 2); // en/de/ar
+   public function show(Request $request, int $id)
+{
+    $lng = substr($request->header('Accept-Language', 'en'), 0, 2);
 
-        $workshop = Workshop::with('services')->findOrFail($id);
+    $workshop = Workshop::with('services')->findOrFail($id);
 
-        // Build a response array and inject title_i18n for each service
-        $out = $workshop->toArray();
-        $out['services'] = $workshop->services->map(function ($s) use ($lng) {
-            $title_i18n = null;
-            if (is_array($s->title_translations)) {
-                $title_i18n = $s->title_translations[$lng]
-                    ?? ($s->title_translations['en'] ?? null);
-            }
-            return [
-                'id'           => $s->id,
-                'workshop_id'  => $s->workshop_id,
-                'title'        => $s->title,
-                'title_i18n'   => $title_i18n,
-                'price'        => $s->price,
-                'created_at'   => $s->created_at,
-                'updated_at'   => $s->updated_at,
-            ];
-        })->values();
+    // include workshop metadata
+    $out = $workshop->toArray();   // <— you were missing this line
 
-        return response()->json($out);
-    }
+    $out['services'] = $workshop->services->map(function ($s) use ($lng) {
+        $title_i18n = null;
+        if (is_array($s->title_translations)) {
+            $title_i18n = $s->title_translations[$lng] ?? ($s->title_translations['en'] ?? null);
+        }
+        return [
+            'id'           => $s->id,
+            'workshop_id'  => $s->workshop_id,
+            'title'        => $s->title,
+            'title_i18n'   => $title_i18n,
+            'price'        => $s->price,
+
+            // service-info template fields
+            'summary'      => $s->summary,
+            'duration_min' => $s->duration_min,
+            'included'     => $s->included,
+            'excluded'     => $s->excluded,
+            'preparation'  => $s->preparation,
+            'policy'       => $s->policy,
+            'faqs'         => $s->faqs,
+            'notes'        => $s->notes,
+
+            'created_at'   => $s->created_at,
+            'updated_at'   => $s->updated_at,
+        ];
+    })->values();
+
+    return response()->json($out);
+}
+
 }

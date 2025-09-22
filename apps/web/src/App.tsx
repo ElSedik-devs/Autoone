@@ -1,12 +1,14 @@
-import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
+// apps/web/src/App.tsx
+import { BrowserRouter, Routes, Route, Link, useNavigate, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
-import RoleRedirect from "./components/RoleRedirect";
+// import RoleRedirect from "./components/RoleRedirect"; // kept in case you still use elsewhere
 import Login from "./pages/Login";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "./store";
 import { logout } from "./features/auth/authSlice";
 import { useTranslation } from "react-i18next";
+
 // Pages
 import WorkshopsList from "./pages/workshops/WorkshopsList";
 import WorkshopDetail from "./pages/workshops/WorkshopDetail";
@@ -38,7 +40,6 @@ import PartnerHome from "./pages/partner/Home";
 import Reports from "./pages/partner/Reports";
 import Cart from "./pages/parts/Cart";
 
-
 import PartsManager from "./pages/partner/parts/PartsManager";
 import PartOrders from "./pages/partner/parts/PartOrders";
 import PartnerSignup from "./pages/auth/PartnerSignup";
@@ -47,16 +48,31 @@ import PartnerPending from "./pages/partner/Pending";
 import PartnerApprovedRoute from "./components/PartnerApprovedRoute";
 import AdminPartners from "./pages/admin/Partners";
 
-// ---- header with single portal link per role ----
+// ---- public demo pages ----
+import PublicHome from "./pages/public/PublicHome";
+import DemoWorkshops from "./pages/public/DemoWorkshops";
+import DemoCarwash from "./pages/public/DemoCarwash";
+import DemoWorkshopDetail from "./pages/public/DemoWorkshopDetail";
+
+/* ---------------- Smart root: public if logged out, redirect if logged in ---------------- */
+function Entry() {
+  const user = useSelector((s: RootState) => s.auth.user);
+  if (user?.role === "user") return <Navigate to="/home" replace />;
+  if (user?.role === "partner") return <Navigate to="/partner" replace />;
+  if (user?.role === "admin") return <Navigate to="/admin" replace />;
+  return <PublicHome />; // logged-out visitors see public landing (demo)
+}
+
+/* ---------------- Header (with smart logo target) ---------------- */
 function Header() {
   const { t } = useTranslation("common");
   const user = useSelector((s: RootState) => s.auth.user);
-  const isUser = user?.role === "user";
+  const role = user?.role;
 
   // Compute cart count only for users
   type CartItem = { id:number; name:string; price:number; image_url?:string|null; qty:number };
   const cartCount = useSelector((s: RootState) => {
-    if (!isUser) return 0;
+    if (role !== "user") return 0;
     const items = s.cart.items as Record<string, CartItem>;
     return Object.values(items).reduce((n, it) => n + it.qty, 0);
   });
@@ -65,17 +81,25 @@ function Header() {
   const nav = useNavigate();
   const doLogout = () => { dispatch(logout()); nav("/login", { replace: true }); };
 
+  const logoTarget = (() => {
+    if (!role) return "/";         // logged out -> public landing (Entry will render PublicHome)
+    if (role === "user") return "/home";
+    if (role === "partner") return "/partner";
+    if (role === "admin") return "/admin"; // change if your admin home differs
+    return "/";
+  })();
+
   return (
     <header className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b">
       <div className="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
-        {/* LEFT: brand -> /home */}
-        <Link to="/home" className="text-lg font-semibold tracking-wide hover:opacity-80">
+        {/* LEFT: brand -> smart route */}
+        <Link to={logoTarget} className="text-lg font-semibold tracking-wide hover:opacity-80">
           AutoOne
         </Link>
 
         {/* RIGHT: (Cart for users) + language + profile/logout */}
         <div className="ml-auto flex items-center gap-3">
-          {isUser && (
+          {role === "user" && (
             <Link
               to="/cart"
               className="relative inline-flex items-center gap-2 rounded-md border px-3 py-2
@@ -100,7 +124,7 @@ function Header() {
 
           <LanguageSwitcher />
 
-          {user && (
+          {user ? (
             <div className="flex items-center gap-2">
               <span className="text-sm opacity-80">{user.name}</span>
               <Link to="/profile" className="btn-outline">
@@ -113,6 +137,11 @@ function Header() {
                 {t("btn.logout", { defaultValue: "Logout" })}
               </button>
             </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Link to="/login" className="btn-outline">Login</Link>
+              <Link to="/signup" className="btn-primary">Sign up</Link>
+            </div>
           )}
         </div>
       </div>
@@ -120,20 +149,28 @@ function Header() {
   );
 }
 
-
-// ---- app routes ----
+/* ---------------- App routes ---------------- */
 export default function App() {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        {/* after login, / sends you to the correct portal */}
-        <Route path="/" element={<RoleRedirect />} />
+        {/* SMART ROOT */}
+        <Route path="/" element={<Entry />} />
 
-        {/* public login */}
+        {/* PUBLIC DEMO (no auth) */}
+        <Route path="/demo" element={<PublicHome />} />
+        <Route path="/demo/workshops" element={<DemoWorkshops />} />
+        <Route path="/demo/carwash" element={<DemoCarwash />} />
+        <Route path="/demo/workshops/:id" element={<DemoWorkshopDetail />} />
+
+        {/* AUTH PAGES */}
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
-        {/* user portal (only users) */}
+        {/* USER PORTAL */}
         <Route
           path="/home"
           element={
@@ -167,232 +204,230 @@ export default function App() {
           }
         />
 
-        {/* partner portal (partners + admins) */}
-       <Route path="/partner-signup" element={<PartnerSignup />} />
-
-<Route
-  path="/partner"
-  element={
-    <ProtectedRoute roles={["partner", "admin"]}>
-      <PartnerApprovedRoute>
-        <PartnerHome />
-      </PartnerApprovedRoute>
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/partner/pending"
-  element={
-    <ProtectedRoute roles={["partner"]}>
-      <PartnerPending />
-    </ProtectedRoute>
-  }
-/>
-<Route path="/partner/signup" element={<PartnerSignup />} />
-
-<Route
-  path="/partner/reports"
-  element={
-    <ProtectedRoute roles={["partner", "admin"]}>
-      <Reports />
-    </ProtectedRoute>
-  }
-/>
+        {/* PARTNER PORTAL */}
+        <Route path="/partner-signup" element={<PartnerSignup />} />
         <Route
-  path="/partner/bookings"
-  element={
-    <ProtectedRoute roles={["partner", "admin"]}>
-      <PartnerBookings />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/partner/services"
-  element={
-    <ProtectedRoute roles={["partner", "admin"]}>
-      <PartnerServices />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/partner/parts"
-  element={
-    <ProtectedRoute roles={["partner","admin"]}>
-      <PartsManager />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/partner/parts/orders"
-  element={
-    <ProtectedRoute roles={["partner","admin"]}>
-      <PartOrders />
-    </ProtectedRoute>
-  }
-/>
-        {/* admin portal (admins only) */}
+          path="/partner"
+          element={
+            <ProtectedRoute roles={["partner", "admin"]}>
+              <PartnerApprovedRoute>
+                <PartnerHome />
+              </PartnerApprovedRoute>
+            </ProtectedRoute>
+          }
+        />
         <Route
-  path="/admin"
-  element={
-    <ProtectedRoute roles={["admin"]}>
-      <AdminDashboard />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/profile"
-  element={
-    <ProtectedRoute roles={["user","partner","admin"]}>
-      <Profile />
-    </ProtectedRoute>
-  }
-/>
-<Route path="/signup" element={<Signup />} />
+          path="/partner/pending"
+          element={
+            <ProtectedRoute roles={["partner"]}>
+              <PartnerPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/partner/reports"
+          element={
+            <ProtectedRoute roles={["partner", "admin"]}>
+              <Reports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/partner/bookings"
+          element={
+            <ProtectedRoute roles={["partner", "admin"]}>
+              <PartnerBookings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/partner/services"
+          element={
+            <ProtectedRoute roles={["partner", "admin"]}>
+              <PartnerServices />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/partner/parts"
+          element={
+            <ProtectedRoute roles={["partner","admin"]}>
+              <PartsManager />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/partner/parts/orders"
+          element={
+            <ProtectedRoute roles={["partner","admin"]}>
+              <PartOrders />
+            </ProtectedRoute>
+          }
+        />
 
-<Route path="/forgot" element={<Forgot />} />
-<Route path="/reset-password" element={<ResetPassword />} />
+        {/* ADMIN */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute roles={["admin"]}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/partners"
+          element={
+            <ProtectedRoute roles={["admin"]}>
+              <AdminPartners />
+            </ProtectedRoute>
+          }
+        />
 
-<Route
-  path="/rental"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <RentalList />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/rental/:id"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <RentalDetail />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/my-rentals"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <MyRentals />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/import"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <ImportsList />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/import/new"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <ImportOrderForm />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/my-imports"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <MyImports />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/parts"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <PartsList />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/parts/:id"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <PartDetail />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/my-part-orders"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <MyPartOrders />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/cart"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <Cart />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/car-wash"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <CarWashList />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/car-wash/:id"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <CarWashDetail />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/carwash"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <CarWashList />
-    </ProtectedRoute>
-  }
-/>
+        {/* PROFILE (any logged-in role) */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute roles={["user","partner","admin"]}>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
 
-<Route
-  path="/carwash/:id"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <WorkshopDetail />
-    </ProtectedRoute>
-  }
-/>
+        {/* CARS / RENTALS / IMPORT / PARTS (user) */}
+        <Route
+          path="/rental"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <RentalList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/rental/:id"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <RentalDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-rentals"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <MyRentals />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/import"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <ImportsList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/import/new"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <ImportOrderForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-imports"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <MyImports />
+            </ProtectedRoute>
+          }
+        />
 
+        <Route
+          path="/parts"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <PartsList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/parts/:id"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <PartDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-part-orders"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <MyPartOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
 
-<Route
-  path="/cars"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <CarsList />
-    </ProtectedRoute>
-  }
-/>
+        {/* CAR WASH (user) */}
+        <Route
+          path="/car-wash"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <CarWashList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/car-wash/:id"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <CarWashDetail />
+            </ProtectedRoute>
+          }
+        />
 
-<Route
-  path="/cars/:id"
-  element={
-    <ProtectedRoute roles={["user"]}>
-      <CarDetail />
-    </ProtectedRoute>
-  }
-/>
+        {/* Legacy aliases preserved */}
+        <Route
+          path="/carwash"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <CarWashList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/carwash/:id"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <WorkshopDetail />
+            </ProtectedRoute>
+          }
+        />
 
-<Route
-  path="/admin/partners"
-  element={
-    <ProtectedRoute roles={["admin"]}>
-      <AdminPartners />
-    </ProtectedRoute>
-  }
-/>
+        <Route
+          path="/cars"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <CarsList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cars/:id"
+          element={
+            <ProtectedRoute roles={["user"]}>
+              <CarDetail />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

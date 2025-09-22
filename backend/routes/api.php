@@ -96,5 +96,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/admin/partners/pending', [AdminController::class,'pendingPartners']);
 Route::patch('/admin/partners/{user}/approve', [AdminController::class,'approvePartner']);
 Route::patch('/admin/partners/{user}/reject', [AdminController::class,'rejectPartner']);
+
+Route::get('/partner/workshops', [PartnerController::class, 'myWorkshops']);
     });
 });

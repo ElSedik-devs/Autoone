@@ -294,5 +294,16 @@
     "error": "Failed to load reports"
   }
 },
-"loading": "Loading…"
+"loading": "Loading…",
+"service.about": "About this service",
+  "service.included": "What’s included",
+  "service.excluded": "What’s not included",
+  "service.prep_duration": "Preparation & duration",
+  "service.duration_est": "Estimated duration: ~{{min}} min",
+  "service.policies": "Policies",
+  "service.cancellation": "Cancellation",
+  "service.warranty": "Warranty",
+  "service.faqs": "FAQs",
+  "service.notes": "Notes",
+  "common.days": "days"
 }

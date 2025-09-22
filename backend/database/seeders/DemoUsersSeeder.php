@@ -16,9 +16,15 @@ class DemoUsersSeeder extends Seeder
         );
 
         User::updateOrCreate(
-            ['email' => 'partner@auto.one'],
-            ['name' => 'Peter Partner', 'password' => Hash::make('pass'), 'role' => 'partner']
-        );
+  ['email' => 'partner@auto.one'],
+  [
+    'name' => 'Peter Partner',
+    'role' => 'partner',
+    'password' => Hash::make('pass'),
+    'partner_status' => 'approved',
+    'partner_approved_at' => now(),
+  ]
+);
 
         User::updateOrCreate(
             ['email' => 'admin@auto.one'],
