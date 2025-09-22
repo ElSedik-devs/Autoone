@@ -206,6 +206,7 @@ export default function App() {
 
         {/* PARTNER PORTAL */}
         <Route path="/partner-signup" element={<PartnerSignup />} />
+        <Route path="/partner/signup" element={<PartnerSignup />} />
         <Route
           path="/partner"
           element={
