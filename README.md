@@ -1,6 +1,6 @@
 # Run the Project (DB + Backend + Frontend)
 
-## Prerequisites
+## Prerequisites:
 
 * **Docker** & **Docker Compose**
 * **PHP 8.x** + **Composer**
